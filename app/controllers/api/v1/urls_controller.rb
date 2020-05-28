@@ -1,5 +1,5 @@
 class Api::V1::UrlsController < ApplicationController
-  before_action :url_params, only: [:create, :show]
+  before_action :url_params, only: [:create, :show, :update ]
 
   def create
     @url = Url.find_by(url_params)
@@ -24,10 +24,22 @@ class Api::V1::UrlsController < ApplicationController
     end
   end
 
+  def update
+    @url = Url.find_by(id: params[:id])
+    if @url.exists?
+      if @url.update(url_params)
+        render status: :ok, json: { notice: "Url updated successfully." }
+      else
+        render status: :unprocessable_entities, json: { errors: @url.errors.full_messages }
+      end
+    else
+      render status: :not_found, json: { notice: "The provided Url is not found."}
+    end
+  end
 
   private
 
   def url_params
-    params.require(:url).permit(:original, :shortened)
+    params.require(:url).permit(:original, :shortened, :pinned, :category_id )
   end
 end
