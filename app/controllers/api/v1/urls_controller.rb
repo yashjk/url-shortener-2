@@ -1,11 +1,12 @@
 class Api::V1::UrlsController < ApplicationController
   before_action :fetch_url_list, only: [ :index ]
   before_action :url_params, only: [ :create, :show, :update ]
-
+  skip_before_action :verify_authenticity_token
+  
   def index
     render json: { url_list: fetch_url_list}
   end
-  
+
   def create
     @url = Url.find_by(url_params)
     if @url.exists?
