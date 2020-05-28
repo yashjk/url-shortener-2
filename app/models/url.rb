@@ -3,6 +3,7 @@ class Url < ApplicationRecord
   validates :original, presence: true, uniqueness: true
   validates :shortened, presence: true, uniqueness: true
   validates_format_of :original, :with => /\A(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?\Z/i
+  belongs_to :category, optional: true
 
   private
 
