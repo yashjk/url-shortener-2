@@ -1,5 +1,6 @@
 class Api::V1::CategoriesController < ApplicationController
   before_action :fetch_category_list, only: [ :index ]
+  before_action :category_params, only: [ :create, :update ]
 
   def index
     render json: { category_list: fetch_category_list }
@@ -32,7 +33,15 @@ class Api::V1::CategoriesController < ApplicationController
     end
   end
 
-  
+  def destroy
+    @category = Category.find_by(id: params[:id])
+    if @category.exists?
+      @category.destroy
+      render status: :ok, json: { notice: "Category deleted successfully."}
+    else
+      render status: :not_found, json: { notice: "Category not found."}
+    end
+  end
 
   private
   def fetch_category_list
