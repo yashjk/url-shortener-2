@@ -1,5 +1,5 @@
 class Api::V1::UrlsController < ApplicationController
-  before_action :url_params, only: [:create]
+  before_action :url_params, only: [:create, :show]
 
   def create
     @url = Url.find_by(url_params)
@@ -15,10 +15,19 @@ class Api::V1::UrlsController < ApplicationController
     end
   end
 
+  def show
+    @url = Url.find_by(url_params)
+    if @url.exists?
+      render status: :ok, json: { url: @url }
+    else
+      render status: :not_found, json: { notice: "Url not found."}
+    end
+  end
+
 
   private
-  
+
   def url_params
-    params.require(:url).permit(:original)
+    params.require(:url).permit(:original, :shortened)
   end
 end
