@@ -1,6 +1,7 @@
 class Api::V1::CategoriesController < ApplicationController
   before_action :fetch_category_list, only: [ :index ]
   before_action :category_params, only: [ :create, :update ]
+  skip_before_action :verify_authenticity_token
 
   def index
     render json: { category_list: fetch_category_list }
@@ -8,7 +9,7 @@ class Api::V1::CategoriesController < ApplicationController
 
   def create
     @category = Category.find_by(category_params)
-    if @category.exists?
+    if @category
       render status: :ok, json: { notice: "The provided category already exists." }
     else
       category = Category.new(category_params)
@@ -22,7 +23,7 @@ class Api::V1::CategoriesController < ApplicationController
 
   def update
     @category = Category.find_by(id: params[:id])
-    if @category.exists?
+    if @category
       if @category.update(category_params)
         render status: :ok, json: { category: @category, notice: "Category updated successfully." }
       else
@@ -35,7 +36,7 @@ class Api::V1::CategoriesController < ApplicationController
 
   def destroy
     @category = Category.find_by(id: params[:id])
-    if @category.exists?
+    if @category
       @category.destroy
       render status: :ok, json: { notice: "Category deleted successfully."}
     else
