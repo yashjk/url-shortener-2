@@ -9,7 +9,7 @@ class Api::V1::UrlsController < ApplicationController
 
   def create
     @url = Url.find_by(url_params)
-    if @url.exists?
+    if @url
       render status: :ok, json: { url: @url, notice: "The provided Url already exists."}
     else
       @url = Url.new(url_params)
@@ -21,18 +21,9 @@ class Api::V1::UrlsController < ApplicationController
     end
   end
 
-  def show
-    @url = Url.find_by(url_params)
-    if @url.exists?
-      render status: :ok, json: { url: @url }
-    else
-      render status: :not_found, json: { notice: "Url not found."}
-    end
-  end
-
   def update
     @url = Url.find_by( id: params[:id] )
-    if @url.exists?
+    if @url
       if @url.update( url_params )
         render status: :ok, json: { notice: "Url updated successfully." }
       else
@@ -45,7 +36,7 @@ class Api::V1::UrlsController < ApplicationController
 
   def destroy
     @url = Url.find_by(id: params[:id])
-    if @url.exists?
+    if @url
       @url.destroy!
       render status: :ok, json: { notice: "Url deleted successfully" }
     else
