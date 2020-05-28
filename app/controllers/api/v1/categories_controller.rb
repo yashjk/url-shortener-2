@@ -19,6 +19,21 @@ class Api::V1::CategoriesController < ApplicationController
     end
   end
 
+  def update
+    @category = Category.find_by(id: params[:id])
+    if @category.exists?
+      if @category.update(category_params)
+        render status: :ok, json: { category: @category, notice: "Category updated successfully." }
+      else
+        render status: :unprocessable_entities, json: { errors: @category.errors.full_messages }
+      end
+    else
+      render status: :not_found, json: { notice: "Category not found." }
+    end
+  end
+
+  
+
   private
   def fetch_category_list
     @categories = Category.order(created_at: :desc)
