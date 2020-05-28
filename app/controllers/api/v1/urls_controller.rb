@@ -37,6 +37,16 @@ class Api::V1::UrlsController < ApplicationController
     end
   end
 
+  def destroy
+    @url = Url.find_by(id: params[:id])
+    if @url.exists?
+      @url.destroy!
+      render status: :ok, json: { notice: "Url deleted successfully" }
+    else
+      render status: :not_found, json: { notice: "The provided Url is not found" }
+    end
+  end
+
   private
 
   def url_params
