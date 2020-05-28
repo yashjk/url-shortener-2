@@ -1,6 +1,11 @@
 class Api::V1::UrlsController < ApplicationController
-  before_action :url_params, only: [:create, :show, :update ]
+  before_action :fetch_url_list, only: [ :index ]
+  before_action :url_params, only: [ :create, :show, :update ]
 
+  def index
+    render json: { url_list: fetch_url_list}
+  end
+  
   def create
     @url = Url.find_by(url_params)
     if @url.exists?
@@ -25,9 +30,9 @@ class Api::V1::UrlsController < ApplicationController
   end
 
   def update
-    @url = Url.find_by(id: params[:id])
+    @url = Url.find_by( id: params[:id] )
     if @url.exists?
-      if @url.update(url_params)
+      if @url.update( url_params )
         render status: :ok, json: { notice: "Url updated successfully." }
       else
         render status: :unprocessable_entities, json: { errors: @url.errors.full_messages }
@@ -51,5 +56,9 @@ class Api::V1::UrlsController < ApplicationController
 
   def url_params
     params.require(:url).permit(:original, :shortened, :pinned, :category_id )
+  end
+
+  def fetch_url_list
+    @urls = Url.order( pinned: :desc, created_at: :desc )
   end
 end
