@@ -25,7 +25,7 @@ class Api::V1::UrlsController < ApplicationController
     @url = Url.find_by( id: params[:id] )
     if @url
       if @url.update( url_params )
-        render status: :ok, json: { notice: "Url updated successfully." }
+        render status: :ok, json: { url: @url, notice: "Url updated successfully." }
       else
         render status: :unprocessable_entities, json: { errors: @url.errors.full_messages }
       end
