@@ -10,11 +10,11 @@ class Api::V1::CategoriesController < ApplicationController
   def create
     @category = Category.find_by(category_params)
     if @category
-      render status: :ok, json: { notice: "The provided category already exists." }
+      render status: :ok, json: { category: @category, notice: "The provided category already exists." }
     else
       category = Category.new(category_params)
       if category.save
-        render status: :ok, json: { notice: "Category created successfully." }
+        render status: :ok, json: { category: @category, notice: "Category created successfully." }
       else
         render status: :unprocessable_entities, json: { errors: category.errors.full_messages }
       end
