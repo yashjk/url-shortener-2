@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ListUrl from "./ListUrl";
+import AddUrlForm from "./AddUrlForm";
+import { Link } from "react-router-dom";
 
 class ManageUrls extends Component {
   constructor() {
@@ -23,10 +25,38 @@ class ManageUrls extends Component {
         });
       });
   };
+
+  handleResponse = (response) => {
+    if (response.status == 200) {
+      this.loadUrlList();
+    } else {
+      response.json().then((err) => {
+        this.setState({
+          errors: err.errors,
+        });
+      });
+    }
+  };
+
   render() {
     return (
       <div className="container">
-        <ListUrl url_list={this.state.url_list} />
+        <div className="d-flex justify-content-end">
+          <Link className="btn btn-link" to="/categories">
+            Manage Categories
+          </Link>
+        </div>
+        <h1
+          style={{ padding: "1rem" }}
+          className="d-flex justify-content-center"
+        >
+          Url List
+        </h1>
+        <AddUrlForm handleResponse={this.handleResponse} />
+        <ListUrl
+          url_list={this.state.url_list}
+          handleResponse={this.handleResponse}
+        />
       </div>
     );
   }
