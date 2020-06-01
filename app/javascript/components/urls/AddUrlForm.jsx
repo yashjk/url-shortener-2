@@ -15,7 +15,6 @@ class AddUrlForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
     const api = "/api/v1/urls/";
     const url = {
       original: this.state.original,
@@ -45,10 +44,7 @@ class AddUrlForm extends Component {
             name="original"
           />
         </div>
-        <div
-          className="d-flex justify-content-end"
-          style={{ paddingBottom: "1rem" }}
-        >
+        <div className="d-flex justify-content-end">
           <button
             type="submit"
             onClick={this.handleSubmit}
