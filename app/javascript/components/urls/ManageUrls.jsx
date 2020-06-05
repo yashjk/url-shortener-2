@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ListUrl from "./ListUrl";
-import AddUrlForm from "./AddUrlForm";
 import { Link } from "react-router-dom";
 
 class ManageUrls extends Component {
@@ -52,7 +51,6 @@ class ManageUrls extends Component {
         >
           Url List
         </h1>
-        <AddUrlForm handleResponse={this.handleResponse} />
         <ListUrl
           url_list={this.state.url_list}
           handleResponse={this.handleResponse}

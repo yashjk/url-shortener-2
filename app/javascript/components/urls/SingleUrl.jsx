@@ -23,6 +23,7 @@ class SingleUrl extends Component {
 
   render() {
     const { original, shortened, pinned, category_id, id } = this.props.url;
+    const env = process.env.ROOT_URL;
     return (
       <tr>
         <th
@@ -33,8 +34,17 @@ class SingleUrl extends Component {
         >
           <Pin />
         </th>
-        <td>{original}</td>
-        <td>https://short.is/{shortened}</td>
+        <td>
+          <a className="btn btn-link" target="_blank" href={original}>
+            {original}
+          </a>
+        </td>
+        <td>
+          <a className="btn btn-link" target="_blank" href={original}>
+            {env}
+            {shortened}
+          </a>
+        </td>
         <td>
           <Dropdown
             category_id={category_id}
