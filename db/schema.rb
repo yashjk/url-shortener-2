@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_04_060134) do
+ActiveRecord::Schema.define(version: 2020_06_05_124024) do
 
   create_table "categories", force: :cascade do |t|
     t.string "title", null: false
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2020_06_04_060134) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "category_id"
+    t.integer "count", default: 0, null: false
     t.index ["category_id"], name: "index_urls_on_category_id"
     t.index ["original", "shortened"], name: "index_urls_on_original_and_shortened", unique: true
   end
