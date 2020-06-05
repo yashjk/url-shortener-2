@@ -65,6 +65,9 @@ class ManageCategories extends Component {
           <Link className="btn btn-link" to="/">
             Manage Urls
           </Link>
+          <Link className="btn btn-link" to="/reports">
+            Reports
+          </Link>
         </div>
         <h1
           style={{ padding: "2rem" }}

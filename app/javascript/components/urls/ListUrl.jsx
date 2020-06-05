@@ -15,6 +15,7 @@ class ListUrl extends Component {
             <th scope="col">Original</th>
             <th scope="col">Shortened</th>
             <th scope="col">Category</th>
+            <th scope="col">Visits</th>
           </tr>
         </thead>
         <tbody>

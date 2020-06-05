@@ -7,7 +7,7 @@ class SingleUrl extends Component {
     super(props);
   }
 
-  handleClick = (id) => {
+  handlePinned = (id) => {
     const api = `/api/v1/urls/${id}`;
     const url = {
       pinned: !this.props.url.pinned,
@@ -21,8 +21,20 @@ class SingleUrl extends Component {
     }).then((response) => this.props.handleResponse(response));
   };
 
+  handleVisits = (id) => {
+    const api = `/api/v1/urls/${id}`;
+    fetch(api).then((response) => this.props.handleResponse(response));
+  };
+  
   render() {
-    const { original, shortened, pinned, category_id, id } = this.props.url;
+    const {
+      original,
+      shortened,
+      pinned,
+      category_id,
+      id,
+      count,
+    } = this.props.url;
     const env = process.env.ROOT_URL;
     return (
       <tr>
@@ -30,7 +42,7 @@ class SingleUrl extends Component {
           className={pinned ? "bi bi-alert-triangle text-success" : ""}
           scope="row"
           style={{ cursor: "pointer" }}
-          onClick={() => this.handleClick(id)}
+          onClick={() => this.handlePinned(id)}
         >
           <Pin />
         </th>
@@ -40,7 +52,12 @@ class SingleUrl extends Component {
           </a>
         </td>
         <td>
-          <a className="btn btn-link" target="_blank" href={original}>
+          <a
+            className="btn btn-link"
+            target="_blank"
+            onClick={() => this.handleVisits(id)}
+            href={original}
+          >
             {env}
             {shortened}
           </a>
@@ -52,6 +69,7 @@ class SingleUrl extends Component {
             handleResponse={this.props.handleResponse}
           />
         </td>
+        <td>{count}</td>
       </tr>
     );
   }
