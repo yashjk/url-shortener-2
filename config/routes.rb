@@ -5,4 +5,6 @@ Rails.application.routes.draw do
       resources :categories, only: [:index, :create, :update, :destroy]
     end
   end
+  root 'homepage#index'
+  get '/*path' => 'homepage#index'
 end
