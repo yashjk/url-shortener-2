@@ -21,6 +21,17 @@ class Api::V1::UrlsController < ApplicationController
     end
   end
 
+  def show
+    @url = Url.find_by(id: params[:id])
+    if @url
+      @url.increment!(:count)
+      @count = Count.create(url_id: params[:id])
+      render status: :ok, json: { url: @url }
+    else
+      render status: :ok, json: {  errors: @url.errors.full_messages }
+    end
+  end
+
   def update
     @url = Url.find_by( id: params[:id] )
     if @url
