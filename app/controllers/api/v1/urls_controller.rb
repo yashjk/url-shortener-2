@@ -1,6 +1,6 @@
 class Api::V1::UrlsController < ApplicationController
   before_action :fetch_url_list, only: [ :index ]
-  before_action :url_params, only: [ :create, :show, :update ]
+  before_action :url_params, only: [ :create, :update ]
   skip_before_action :verify_authenticity_token
   
   def index
@@ -16,7 +16,7 @@ class Api::V1::UrlsController < ApplicationController
       if @url.save
         render status: :ok, json: { url: @url, notice: "Url created successfully."}
       else
-        render status: :unprocessable_entities, json: { errors: @url.errors.full_messages }
+        render status: :unprocessable_entity, json: { errors: @url.errors.full_messages }
       end
     end
   end
@@ -38,7 +38,7 @@ class Api::V1::UrlsController < ApplicationController
       if @url.update( url_params )
         render status: :ok, json: { url: @url, notice: "Url updated successfully." }
       else
-        render status: :unprocessable_entities, json: { errors: @url.errors.full_messages }
+        render status: :unprocessable_entity, json: { errors: @url.errors.full_messages }
       end
     else
       render status: :not_found, json: { notice: "The provided Url is not found."}

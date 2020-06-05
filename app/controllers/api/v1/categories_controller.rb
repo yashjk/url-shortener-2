@@ -16,7 +16,7 @@ class Api::V1::CategoriesController < ApplicationController
       if category.save
         render status: :ok, json: { category: @category, notice: "Category created successfully." }
       else
-        render status: :unprocessable_entities, json: { errors: category.errors.full_messages }
+        render status: :unprocessable_entity, json: { errors: category.errors.full_messages }
       end
     end
   end
@@ -27,7 +27,7 @@ class Api::V1::CategoriesController < ApplicationController
       if @category.update(category_params)
         render status: :ok, json: { category: @category, notice: "Category updated successfully." }
       else
-        render status: :unprocessable_entities, json: { errors: @category.errors.full_messages }
+        render status: :unprocessable_entity, json: { errors: @category.errors.full_messages }
       end
     else
       render status: :not_found, json: { notice: "Category not found." }
